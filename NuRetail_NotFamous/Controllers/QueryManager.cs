@@ -27,7 +27,6 @@ namespace NuRetail_NotFamous.Controllers
             catch (MySqlException ex)
             {
                 Console.WriteLine(ex.ToString());
-
             }
             finally
             {

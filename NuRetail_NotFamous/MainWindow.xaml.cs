@@ -26,6 +26,7 @@ namespace NuRetail_NotFamous
         public MainWindow()
         {
             InitializeComponent();
+            QManager.Test();            
         }
 
         private void Refresh_Button_Click_1(object sender, RoutedEventArgs e)

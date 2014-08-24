@@ -4,15 +4,23 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
 C:\Users\echo_drop\Documents\Visual Studio 2012\Projects\NuRetail_NotFamous\NuRetail_NotFamous\obj\Debug\
+=======
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\
+>>>>>>> ef6492f6454b432f90c3008a30406c46713b5da0
 NuRetail_NotFamous
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
 C:\Users\echo_drop\Documents\Visual Studio 2012\Projects\NuRetail_NotFamous\NuRetail_NotFamous\App.xaml
+=======
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\App.xaml
+>>>>>>> ef6492f6454b432f90c3008a30406c46713b5da0
 11151548125
 
-151302631144
+15-624545485
 13-608803306
 MainWindow.xaml;
 

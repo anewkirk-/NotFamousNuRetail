@@ -11,3 +11,16 @@ c:\users\echo_drop\documents\visual studio 2012\Projects\NuRetail_NotFamous\NuRe
 c:\users\echo_drop\documents\visual studio 2012\Projects\NuRetail_NotFamous\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous.csproj.GenerateResource.Cache
 c:\users\echo_drop\documents\visual studio 2012\Projects\NuRetail_NotFamous\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous.exe
 c:\users\echo_drop\documents\visual studio 2012\Projects\NuRetail_NotFamous\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous.pdb
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\bin\Debug\NuRetail_NotFamous.exe.config
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous.exe
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous.pdb
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\bin\Debug\NuRetail_NotFamous.exe
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\bin\Debug\NuRetail_NotFamous.pdb
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous.csprojResolveAssemblyReference.cache
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\MainWindow.baml
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\MainWindow.g.cs
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\App.g.cs
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous_MarkupCompile.cache
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous.g.resources
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous.Properties.Resources.resources
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous.csproj.GenerateResource.Cache

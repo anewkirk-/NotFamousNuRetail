@@ -53,7 +53,10 @@ and p.purchase_state = ps.purchase_state_id
 group by p.purchase_id
 order by p.purchase_date desc, v.vendor_name asc;";
 
-        private string purchaseDetailQuery = "";
+        private string purchaseDetailQueryP1 = @"select p.sku, p.name as product_name, pp.product_qty, pp.product_price
+from products p, purchase_products pp
+where p.product_id = pp.product_id
+and pp.purchase_id = ";
 
         public MySqlConnection connection;
 
@@ -110,8 +113,11 @@ order by p.purchase_date desc, v.vendor_name asc;";
                 {
                     connection = new MySqlConnection(connectString);
                 }
-                connection.Open();
-                IsConnectionOpen = true;
+                if (!IsConnectionOpen)
+                {
+                    connection.Open();
+                    IsConnectionOpen = true;
+                }
                 result = true;
             }
             catch (MySqlException ex)
@@ -170,16 +176,30 @@ order by p.purchase_date desc, v.vendor_name asc;";
             return result;
         }
 
-        public void QueryPurchaseOrderDetails()
+        public PurchaseOrderDetail QueryPurchaseOrderDetail(int id)
         {
-            List<PurchaseOrderDetail> purchaseOrders = new List<PurchaseOrderDetail>();
+            PurchaseOrderDetail result = new PurchaseOrderDetail();
 
-            string Sku;
-            string Name;
-            int Quantity;
-            double UnitCost;
-            double ExtendedCost;
-            
+            string query = purchaseDetailQueryP1;
+            query += id.ToString();
+            query += ";";
+
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader resultReader = command.ExecuteReader();
+
+            if (resultReader.Read())
+            {
+                PurchaseOrderDetail current = new PurchaseOrderDetail();
+
+                current.Sku = (string)resultReader["sku"];
+                current.ProductName = (string)resultReader["product_name"];
+                current.Quantity = (int)resultReader["product_qty"];
+                current.UnitCost = double.Parse((string)resultReader["product_price"]);
+                current.ExtendedCost = current.Quantity * current.UnitCost;
+            }
+
+            resultReader.Close();
+            return result;
         }
 
         public List<PurchaseOrderSummary> QueryPurchaseOrderSummaries()

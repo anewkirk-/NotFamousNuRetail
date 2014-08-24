@@ -1,17 +1,26 @@
 ﻿<Window x:Class="NuRetail_NotFamous.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="NuRetail Database Client [Team Not Famous]" Height="350" Width="525">
+        Title="NuRetail Database Client [Team Not Famous]" Height="400" Width="525">
+    
+    <Window.Resources>
+        <Style x:Key="leftLabelsStyle" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+        </Style>
+        <Style x:Key="rightLabelsStyle" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        </Style>
+    </Window.Resources>
+    
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Debug">
+            <MenuItem Header="Server">
                 <MenuItem Header="Open Connection" Click="OpenMenuItem_Click_1"></MenuItem>
                 <MenuItem Header="Close Connection" Click="CloseMenuItem_Click_2"></MenuItem>
-                <MenuItem Header="Query and Populate Warehouses" Click="WarehouseQMenuItem_Click_3"></MenuItem>
-                <MenuItem Header="Query and Populate Vendors" Click="VendorQMenuItem_Click_1"></MenuItem>
             </MenuItem>
         </Menu>
-        
+
         <StatusBar DockPanel.Dock="Bottom" x:Name="WindowStatusBar">
             <TextBlock x:Name="StatusTextBlock" Text="{Binding Path=IsConnectionOpen, Converter={StaticResource StatusBarConv}}"></TextBlock>
         </StatusBar>
@@ -20,18 +29,43 @@
             <TabItem Header="Warehouses">
                 <DataGrid x:Name="WarehouseDataGrid" IsReadOnly="True"></DataGrid>
             </TabItem>
-            
+
             <TabItem Header="Vendors">
                 <DataGrid x:Name="VendorsDataGrid" IsReadOnly="True"></DataGrid>
             </TabItem>
-            
+
             <TabItem Header="Purchase Order Summary">
-                <DataGrid x:Name="PurchaseSumDataGrid" SelectionChanged="PurchaseSumDataGrid_SelectionChanged_1" IsReadOnly="True"></DataGrid>
+                <DataGrid x:Name="PurchaseSumDataGrid" SelectionChanged="PurchaseSumDataGrid_SelectionChanged_1" SelectionMode="Single"></DataGrid>
             </TabItem>
-            
+
             <TabItem Header="Purchase Order Details">
                 <DockPanel>
-                    <DataGrid x:Name="PurchaseDetDataGrid" IsReadOnly="True"></DataGrid>
+                    <Grid x:Name="PurchaseDetailGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="4*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource leftLabelsStyle}">Purchase ID:</Label>
+                        <Label Grid.Column="1" Grid.Row="0" Content="{Binding Path=Id}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource leftLabelsStyle}">Date:</Label>
+                        <Label Grid.Column="1" Grid.Row="1" Content="{Binding Path=Date}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                    </Grid>
                 </DockPanel>
             </TabItem>
         </TabControl>

@@ -24,11 +24,14 @@ namespace NuRetail_NotFamous
     {
 
         public QueryManager CurrentQueryManager { get; set; }
+        public int SelectedPurchaseOrder { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
             CurrentQueryManager = (QueryManager)FindResource("QManager");
             StatusTextBlock.DataContext = CurrentQueryManager;
+            SetPurchaseDetGridLines();
         }
 
         private void RefreshWarehouses()
@@ -47,6 +50,20 @@ namespace NuRetail_NotFamous
         {
             List<Vendor> v = CurrentQueryManager.QueryVendors();
             VendorsDataGrid.ItemsSource = v;
+        }
+
+        private void RefreshPurchaseDetail()
+        {
+            PurchaseOrderSummary p = (PurchaseOrderSummary)PurchaseSumDataGrid.SelectedItem;
+            if (p != null)
+            {
+                SelectedPurchaseOrder = p.Id;
+                PurchaseOrderDetail pd = CurrentQueryManager.QueryPurchaseOrderDetail(p.Id);
+                FullPurchaseInfo fpi = new FullPurchaseInfo(p, pd);
+                PurchaseDetailGrid.DataContext = fpi;
+                WindowTabControl.SelectedIndex = 3;
+            }
+            
         }
 
         private void Refresh_Button_Click_1(object sender, RoutedEventArgs e)
@@ -78,9 +95,8 @@ namespace NuRetail_NotFamous
                         RefreshPurchaseSummaries();
                         break;
                     case 3:
-                        WindowTabControl.SelectedIndex = 0;
-                        throw new NotImplementedException();
-
+                        RefreshPurchaseDetail();
+                        break;
                 }
             }
             catch (Exception e)
@@ -103,7 +119,7 @@ namespace NuRetail_NotFamous
 
         private void PurchaseSumDataGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-
+            RefreshPurchaseDetail();
         }
 
         private void OpenMenuItem_Click_1(object sender, RoutedEventArgs e)
@@ -119,15 +135,25 @@ namespace NuRetail_NotFamous
             CurrentQueryManager.Close();
         }
 
-        private void WarehouseQMenuItem_Click_3(object sender, RoutedEventArgs e)
+        private void SetPurchaseDetGridLines()
         {
-            RefreshWarehouses();
-        }
+            SolidColorBrush b = new SolidColorBrush(Colors.Black);
+            for (int i = 0; i < 11; i++)
+            {
+                Rectangle r = new Rectangle();
+                r.Stroke = b;
+                r.StrokeThickness = 0.1;
+                PurchaseDetailGrid.Children.Add(r);
+                Grid.SetRow(r, i);
+                Grid.SetColumn(r, 0);
 
-        private void VendorQMenuItem_Click_1(object sender, RoutedEventArgs e)
-        {
-            RefreshVendors();
+                Rectangle r2 = new Rectangle();
+                r2.Stroke = b;
+                r2.StrokeThickness = 0.1;
+                PurchaseDetailGrid.Children.Add(r2);
+                Grid.SetRow(r2, i);
+                Grid.SetColumn(r2, 1);
+            }
         }
-
     }
 }

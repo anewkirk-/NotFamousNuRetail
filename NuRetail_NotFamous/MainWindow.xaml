@@ -14,20 +14,20 @@
         <Button DockPanel.Dock="Bottom" Click="Refresh_Button_Click_1">Refresh</Button>
         <TabControl x:Name="WindowTabControl" SelectionChanged="TabControl_SelectionChanged_1">
             <TabItem Header="Warehouses">
-                <DataGrid x:Name="WarehouseDataGrid"></DataGrid>
+                <DataGrid x:Name="WarehouseDataGrid" IsReadOnly="True"></DataGrid>
             </TabItem>
             
             <TabItem Header="Vendors">
-                <DataGrid x:Name="VendorsDataGrid"></DataGrid>
+                <DataGrid x:Name="VendorsDataGrid" IsReadOnly="True"></DataGrid>
             </TabItem>
             
             <TabItem Header="Purchase Order Summary">
-                <DataGrid x:Name="PurchaseSumDataGrid" SelectionChanged="PurchaseSumDataGrid_SelectionChanged_1"></DataGrid>
+                <DataGrid x:Name="PurchaseSumDataGrid" SelectionChanged="PurchaseSumDataGrid_SelectionChanged_1" IsReadOnly="True"></DataGrid>
             </TabItem>
             
             <TabItem Header="Purchase Order Details">
                 <DockPanel>
-                    <DataGrid x:Name="PurchaseDetDataGrid"></DataGrid>
+                    <DataGrid x:Name="PurchaseDetDataGrid" IsReadOnly="True"></DataGrid>
                 </DockPanel>
             </TabItem>
         </TabControl>

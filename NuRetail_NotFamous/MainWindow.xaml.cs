@@ -62,17 +62,28 @@ namespace NuRetail_NotFamous
 
         private void RefreshCurrentTab()
         {
-            switch (WindowTabControl.SelectedIndex)
+            try
             {
-                case 0:
-                    RefreshWarehouses();
-                    break;
-                case 1:
-                    RefreshVendors();
-                    break;
-                case 2:
-                    RefreshPurchaseSummaries();
-                    break;
+                switch (WindowTabControl.SelectedIndex)
+                {
+                    case 0:
+                        RefreshWarehouses();
+                        break;
+                    case 1:
+                        RefreshVendors();
+                        break;
+                    case 2:
+                        RefreshPurchaseSummaries();
+                        break;
+                    case 3:
+                        WindowTabControl.SelectedIndex = 0;
+                        throw new NotImplementedException();
+
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("An error has occurred.\n" + e.Message);
             }
         }
 

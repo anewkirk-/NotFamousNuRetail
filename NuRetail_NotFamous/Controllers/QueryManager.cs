@@ -43,7 +43,7 @@ order by vendor_name;";
         public QueryManager()
         {
             connection = new MySqlConnection(connectString);
-            IsConnectionOpen = false;
+            this.Open();
         }
 
         public string Test()

@@ -28,9 +28,8 @@ namespace NuRetail_NotFamous
 
         public MainWindow()
         {
-<<<<<<< HEAD
             InitializeComponent();            
-=======
+
             InitializeComponent();
             CurrentQueryManager = (QueryManager)FindResource("QManager");
             StatusTextBlock.DataContext = CurrentQueryManager;
@@ -67,7 +66,6 @@ namespace NuRetail_NotFamous
                 WindowTabControl.SelectedIndex = 3;
             }
             
->>>>>>> 66e11ae9ca900595ff3ddd892e76309ab1320a53
         }
 
         private void Refresh_Button_Click_1(object sender, RoutedEventArgs e)
@@ -147,14 +145,14 @@ namespace NuRetail_NotFamous
                 Rectangle r = new Rectangle();
                 r.Stroke = b;
                 r.StrokeThickness = 0.1;
-                PurchaseDetailGrid.Children.Add(r);
+                //PurchaseDetailGrid.Children.Add(r);
                 Grid.SetRow(r, i);
                 Grid.SetColumn(r, 0);
 
                 Rectangle r2 = new Rectangle();
                 r2.Stroke = b;
                 r2.StrokeThickness = 0.1;
-                PurchaseDetailGrid.Children.Add(r2);
+                //PurchaseDetailGrid.Children.Add(r2);
                 Grid.SetRow(r2, i);
                 Grid.SetColumn(r2, 1);
             }

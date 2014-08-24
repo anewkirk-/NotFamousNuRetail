@@ -16,6 +16,9 @@ namespace NuRetail_NotFamous.Controllers
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+//        private string connectString = @"server=localhost; Port=3306; database=nuretail; user=notfamous;
+//            password=firemonkey";
+
         private string connectString = @"server=localhost; Port=3306; database=nuretail; user=notfamous;
             password=firemonkey";
 

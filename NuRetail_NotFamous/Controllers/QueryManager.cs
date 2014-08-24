@@ -176,9 +176,9 @@ and pp.purchase_id = ";
             return result;
         }
 
-        public PurchaseOrderDetail QueryPurchaseOrderDetail(int id)
+        public List<PurchaseOrderDetail> QueryPurchaseOrderDetail(int id)
         {
-            PurchaseOrderDetail result = new PurchaseOrderDetail();
+            List<PurchaseOrderDetail> result = new List<PurchaseOrderDetail>();
 
             string query = purchaseDetailQueryP1;
             query += id.ToString();
@@ -189,13 +189,14 @@ and pp.purchase_id = ";
 
             if (resultReader.Read())
             {
-                
+                PurchaseOrderDetail current = new PurchaseOrderDetail();
 
-                result.Sku = (string)resultReader["sku"];
-                result.ProductName = (string)resultReader["product_name"];
-                result.Quantity = (int)resultReader["product_qty"];
-                result.UnitCost = double.Parse((string)resultReader["product_price"]);
-                result.ExtendedCost = result.Quantity * result.UnitCost;
+                current.Sku = (string)resultReader["sku"];
+                current.ProductName = (string)resultReader["product_name"];
+                current.Quantity = (int)resultReader["product_qty"];
+                current.UnitCost = double.Parse((string)resultReader["product_price"]);
+                current.ExtendedCost = current.Quantity * current.UnitCost;
+                result.Add(current);
             }
 
             resultReader.Close();

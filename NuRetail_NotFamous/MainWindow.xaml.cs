@@ -57,10 +57,17 @@ namespace NuRetail_NotFamous
             PurchaseOrderSummary p = (PurchaseOrderSummary)PurchaseSumDataGrid.SelectedItem;
             if (p != null)
             {
+
                 SelectedPurchaseOrder = p.Id;
-                PurchaseOrderDetail pd = CurrentQueryManager.QueryPurchaseOrderDetail(p.Id);
-                FullPurchaseInfo fpi = new FullPurchaseInfo(p, pd);
-                PurchaseDetailGrid.DataContext = fpi;
+                List<PurchaseOrderDetail> products = CurrentQueryManager.QueryPurchaseOrderDetail(p.Id);
+                List<FullPurchaseInfo> result = new List<FullPurchaseInfo>();
+                foreach (PurchaseOrderDetail pod in products)
+                {
+                    FullPurchaseInfo fpi = new FullPurchaseInfo(p, pod);
+                    result.Add(fpi);
+                }
+                
+                PurchaseDetailGrid.DataContext = result;
                 WindowTabControl.SelectedIndex = 3;
             }
             
@@ -75,7 +82,7 @@ namespace NuRetail_NotFamous
             else
             {
                 CurrentQueryManager.Open();
-                Refresh_Button_Click_1(null, null);
+                RefreshCurrentTab();
             }
         }
 

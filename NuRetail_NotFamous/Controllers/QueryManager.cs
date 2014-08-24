@@ -85,8 +85,9 @@ order by vendor_name;";
             return a;
         }
 
-        public void Open()
+        public bool Open()
         {
+            bool result = false;
             try
             {
                 if (connection == null)
@@ -95,12 +96,14 @@ order by vendor_name;";
                 }
                 connection.Open();
                 IsConnectionOpen = true;
+                result = true;
             }
             catch (MySqlException ex)
             {
                 IsConnectionOpen = false;
                 Console.WriteLine(ex.ToString());
             }
+            return result;
         }
 
         public void Close()

@@ -86,7 +86,8 @@ namespace NuRetail_NotFamous
             }
             catch (Exception e)
             {
-                MessageBox.Show("An error has occurred.\n" + e.Message);
+                string msg = "An error has occurred.\n" + e.Message;
+                Dispatcher.BeginInvoke(new Action(() => MessageBox.Show(msg)));
             }
         }
 
@@ -94,6 +95,10 @@ namespace NuRetail_NotFamous
         {
             TabControl tc = sender as TabControl;
             TabItem selected = tc.SelectedItem as TabItem;
+            if (!CurrentQueryManager.IsConnectionOpen)
+            {
+                CurrentQueryManager.Open();
+            }
             RefreshCurrentTab();
         }
 
@@ -104,7 +109,10 @@ namespace NuRetail_NotFamous
 
         private void OpenMenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            CurrentQueryManager.Open();
+            if (!CurrentQueryManager.Open())
+            {
+                MessageBox.Show("An error has occurred.\nCould not connect to database server.");
+            }
         }
 
         private void CloseMenuItem_Click_2(object sender, RoutedEventArgs e)
@@ -121,7 +129,6 @@ namespace NuRetail_NotFamous
         {
             RefreshVendors();
         }
-
 
     }
 }

@@ -3,8 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="NuRetail Database Client [Team Not Famous]" Height="350" Width="525">
     <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Debug">
+                <MenuItem Header="Open Connection" Click="OpenMenuItem_Click_1"></MenuItem>
+                <MenuItem Header="Close Connection" Click="CloseMenuItem_Click_2"></MenuItem>
+                <MenuItem Header="Query and Populate Warehouses" Click="WarehouseQMenuItem_Click_3"></MenuItem>
+            </MenuItem>
+        </Menu>
         <Button DockPanel.Dock="Bottom" Click="Refresh_Button_Click_1">Refresh</Button>
-        <TabControl SelectionChanged="TabControl_SelectionChanged_1">
+        <TabControl x:Name="WindowTabControl" SelectionChanged="TabControl_SelectionChanged_1">
             <TabItem Header="Warehouses">
                 <DataGrid x:Name="WarehouseDataGrid"></DataGrid>
             </TabItem>

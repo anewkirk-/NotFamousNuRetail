@@ -13,19 +13,39 @@ namespace NuRetail_NotFamous.Controllers
 {
     public class QueryManager
     {
-        string ConnectionURL = @"server=localhost; Port=3306; database=nuretail; user=notfamous;
+        private MySqlConnection connection = new MySqlConnection();
+
+        private string connectString = @"server=localhost; Port=3306; database=nuretail; user=notfamous;
             password=firemonkey";
-        MySqlConnection connection = new MySqlConnection();
 
-        public void Test()
+        private string warehouseQuery = @"select w.warehouse_id, 
+	w.name, 
+	concat(a.street,
+		', ',
+		a.city,
+		', ',
+		a.state,
+		' ',
+		a.postal_code) as address
+from warehouses w, addresses a
+where w.address_id = a.address_id;";
+
+        private string vendorQuery = "";
+
+        private string purchaseSummaryQuery = "";
+
+        private string purchaseDetailQuery = "";
+
+
+        public string Test()
         {
-
+            string a = string.Empty;
             try
             {
-                connection = new MySqlConnection(ConnectionURL);
+                connection = new MySqlConnection(connectString);
                 connection.Open();
-                Console.WriteLine("MySQL version :" + connection.ServerVersion.ToString());
 
+                a = "Test connection successful: MySQL version :" + connection.ServerVersion.ToString();
             }
             catch (MySqlException ex)
             {
@@ -37,67 +57,77 @@ namespace NuRetail_NotFamous.Controllers
                 {
                     connection.Close();
                 }
+            }
+            return a;
+        }
 
-                if (connect.State == ConnectionState.Open)
+        public void Open()
+        {
+            try
+            {
+                if (connection == null)
                 {
-                    connect.Close();
+                    connection = new MySqlConnection(connectString);
                 }
+                connection.Open();
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
 
-        MySqlDataReader read = null;
-        MySqlConnection connect = null;
-        MySqlCommand command = null;
-
-        private ObservableCollection<PurchaseOrderDetail> _PurchaseOD;
-
-        public ObservableCollection<PurchaseOrderDetail> PurchaseOD
+        public void Close()
         {
-            get { return _PurchaseOD; }
-            set { _PurchaseOD = value; }
+            if (connection != null)
+            {
+                connection.Close();
+            }
         }
 
-        private void QueryPurchaseOrderDetails()
+        private void QueryVendors()
         {
+            long Id;
+            string Name;
+        }
+
+        public List<Warehouse> QueryWarehouses()
+        {
+            List<Warehouse> result = new List<Warehouse>();
+
+            MySqlCommand command = new MySqlCommand(warehouseQuery, connection);
+            MySqlDataReader resultReader = command.ExecuteReader();
+
+            while (resultReader.Read())
+            {
+                Warehouse current = new Warehouse();
+
+                current.Id = (int)resultReader["warehouse_id"];
+                current.Name = (string)resultReader["name"];
+                current.Address = (string)resultReader["address"];
+                result.Add(current);
+            }
+
+            //close Data Reader
+            resultReader.Close();
+
+            //return list to be displayed
+            return result;
+        }
+
+        public void QueryPurchaseOrderDetails()
+        {
+            List<PurchaseOrderDetail> purchaseOrders = new List<PurchaseOrderDetail>();
+
             string Sku;
             string Name;
             int Quantity;
             double UnitCost;
             double ExtendedCost;
-
-            while(read.Read())
-            {
-
-            }
-            string SkuCommand = "SELECT" +
-                                 "FROM" +
-                                 "WHERE";
-            command = new MySqlCommand(SkuCommand);
-            command.Connection = connect;
-            string NameCommand = "SELECT" +
-                                "FROM" +
-                                "WHERE";
-            command = new MySqlCommand(NameCommand);
-            command.Connection = connect;
-            string QuantityCommand = "SELECT" +
-                                "FROM" +
-                                "WHERE";
-            command = new MySqlCommand(QuantityCommand);
-            command.Connection = connect;
-            string UnitCostCommand = "SELECT" +
-                                "FROM" +
-                                "WHERE";
-            command = new MySqlCommand(UnitCostCommand);
-            command.Connection = connect;
-            string ExtendedCostCommand = "SELECT" +
-                                "FROM" +
-                                "WHERE";
-            command = new MySqlCommand(ExtendedCostCommand);
-            command.Connection = connect;
+            
         }
 
-
-        private void QueryPurchaseOrderSummary()
+        private void QueryPurchaseOrderSummaries()
         {
             long Id;
             string Date;
@@ -105,19 +135,9 @@ namespace NuRetail_NotFamous.Controllers
             double TotalCost;
             PurchaseOrderStatus Status;
             Warehouse ShippedToWareouse;
+
+            
         }
 
-        private void QueryVendor()
-        {
-            long Id;
-            string Name;
-        }
-
-        private void QueryWarehouse()
-        {
-            long Id;
-            string Name;
-            string Address;
-        }
     }
 }

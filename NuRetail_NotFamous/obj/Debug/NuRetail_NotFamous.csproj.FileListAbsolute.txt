@@ -24,3 +24,6 @@ C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\
 C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous.g.resources
 C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous.Properties.Resources.resources
 C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous.csproj.GenerateResource.Cache
+C:\Users\echo_drop\Documents\Visual Studio 2012\Projects\NuRetail_NotFamous\NuRetail_NotFamous\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\echo_drop\Documents\Visual Studio 2012\Projects\NuRetail_NotFamous\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous_MarkupCompile.lref
+C:\Users\echo_drop\Documents\Visual Studio 2012\Projects\NuRetail_NotFamous\NuRetail_NotFamous\obj\Debug\App.baml

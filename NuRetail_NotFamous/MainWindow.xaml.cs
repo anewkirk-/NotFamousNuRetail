@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using NuRetail_NotFamous.Controllers;
+using NuRetail_NotFamous.Models;
 
 namespace NuRetail_NotFamous
 {
@@ -22,16 +23,44 @@ namespace NuRetail_NotFamous
     public partial class MainWindow : Window
     {
 
-        public QueryManager QManager { get; set; }
+        public QueryManager CurrentQueryManager { get; set; }
         public MainWindow()
         {
             InitializeComponent();
-            QManager.Test();            
+            CurrentQueryManager = (QueryManager)FindResource("QManager");
+        }
+
+        private void RefreshWarehouses()
+        {
+            List<Warehouse> w = CurrentQueryManager.QueryWarehouses();
+            WarehouseDataGrid.Items.Clear();
+            WarehouseDataGrid.ItemsSource = w;
+        }
+
+        private void RefreshPurchaseSummaries()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void RefreshVendors()
+        {
+            throw new NotImplementedException();
         }
 
         private void Refresh_Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            switch (WindowTabControl.SelectedIndex)
+            {
+                case 0:
+                    RefreshWarehouses();
+                    break;
+                case 1:
+                    RefreshVendors();
+                    break;
+                case 2:
+                    RefreshPurchaseSummaries();
+                    break;
+            }
         }
 
         private void TabControl_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -45,5 +74,22 @@ namespace NuRetail_NotFamous
         {
 
         }
+
+        private void OpenMenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            CurrentQueryManager.Open();
+        }
+
+        private void CloseMenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            CurrentQueryManager.Close();
+        }
+
+        private void WarehouseQMenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            RefreshWarehouses();
+        }
+
+
     }
 }

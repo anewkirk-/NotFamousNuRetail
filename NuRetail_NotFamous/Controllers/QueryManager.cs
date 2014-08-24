@@ -35,7 +35,23 @@ where w.address_id = a.address_id;";
 from vendors
 order by vendor_name;";
 
-        private string purchaseSummaryQuery = "";
+        private string purchaseSummaryQuery = @"select p.purchase_id, 
+	p.purchase_date, 
+	v.vendor_name, 
+	round(sum(pp.product_qty * pp.product_price),2) as total_price,
+	ps.state, 
+	w.name as warehouse
+from purchases p,
+	vendors v,
+	purchase_products pp,
+	warehouses w,
+	purchase_states ps
+where p.purchase_id = pp.purchase_id
+and v.vendor_id = p.vendor_id
+and w.warehouse_id = p.warehouse_id
+and p.purchase_state = ps.purchase_state_id
+group by p.purchase_id
+order by p.purchase_date desc, v.vendor_name asc;";
 
         private string purchaseDetailQuery = "";
 
@@ -166,16 +182,28 @@ order by vendor_name;";
             
         }
 
-        private void QueryPurchaseOrderSummaries()
+        public List<PurchaseOrderSummary> QueryPurchaseOrderSummaries()
         {
-            long Id;
-            string Date;
-            Vendor Supplier;
-            double TotalCost;
-            PurchaseOrderStatus Status;
-            Warehouse ShippedToWareouse;
+            List<PurchaseOrderSummary> result = new List<PurchaseOrderSummary>();
 
-            
+            MySqlCommand command = new MySqlCommand(purchaseSummaryQuery, connection);
+            MySqlDataReader resultReader = command.ExecuteReader();
+
+            while (resultReader.Read())
+            {
+                PurchaseOrderSummary current = new PurchaseOrderSummary();
+
+                current.Id = (int)resultReader["purchase_id"];
+                current.Date = (DateTime)resultReader["purchase_date"];
+                current.SupplierName = (string)resultReader["vendor_name"];
+                current.TotalCost = (double)resultReader["total_price"];
+                current.Status = (string)resultReader["state"];
+                current.ShippedToWareouse = (string)resultReader["warehouse"];
+                result.Add(current);
+            }
+
+            resultReader.Close();
+            return result;
         }
 
         private void FirePropertyChanged(string property)

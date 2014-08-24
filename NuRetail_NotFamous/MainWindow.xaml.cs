@@ -39,7 +39,8 @@ namespace NuRetail_NotFamous
 
         private void RefreshPurchaseSummaries()
         {
-            throw new NotImplementedException();
+            List<PurchaseOrderSummary> w = CurrentQueryManager.QueryPurchaseOrderSummaries();
+            PurchaseSumDataGrid.ItemsSource = w;
         }
 
         private void RefreshVendors()
@@ -74,9 +75,7 @@ namespace NuRetail_NotFamous
                         RefreshVendors();
                         break;
                     case 2:
-                        WindowTabControl.SelectedIndex = 0;
-                        throw new NotImplementedException();
-                        //RefreshPurchaseSummaries();
+                        RefreshPurchaseSummaries();
                         break;
                     case 3:
                         WindowTabControl.SelectedIndex = 0;

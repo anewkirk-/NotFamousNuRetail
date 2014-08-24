@@ -25,8 +25,7 @@ namespace NuRetail_NotFamous
         public QueryManager QManager { get; set; }
         public MainWindow()
         {
-            InitializeComponent();
-            QManager.Test();            
+            InitializeComponent();            
         }
 
         private void Refresh_Button_Click_1(object sender, RoutedEventArgs e)

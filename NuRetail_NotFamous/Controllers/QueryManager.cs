@@ -4,6 +4,7 @@ using NuRetail_NotFamous.nEnums;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -11,26 +12,87 @@ using System.Threading.Tasks;
 
 namespace NuRetail_NotFamous.Controllers
 {
-    public class QueryManager
+    public class QueryManager : INotifyPropertyChanged
     {
-        string ConnectionURL = @"server=localhost; Port=3306; database=nuretail; user=notfamous;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private string connectString = @"server=localhost; Port=3306; database=nuretail; user=notfamous;
             password=firemonkey";
-        MySqlConnection connection = new MySqlConnection();
 
-        public void Test()
+        private string warehouseQuery = @"select w.warehouse_id, 
+	w.name, 
+	concat(a.street,
+		', ',
+		a.city,
+		', ',
+		a.state,
+		' ',
+		a.postal_code) as address
+from warehouses w, addresses a
+where w.address_id = a.address_id;";
+
+        private string vendorQuery = @"select vendor_id, vendor_name
+from vendors
+order by vendor_name;";
+
+        private string purchaseSummaryQuery = @"select p.purchase_id, 
+	p.purchase_date, 
+	v.vendor_name, 
+	round(sum(pp.product_qty * pp.product_price),2) as total_price,
+	ps.state, 
+	w.name as warehouse
+from purchases p,
+	vendors v,
+	purchase_products pp,
+	warehouses w,
+	purchase_states ps
+where p.purchase_id = pp.purchase_id
+and v.vendor_id = p.vendor_id
+and w.warehouse_id = p.warehouse_id
+and p.purchase_state = ps.purchase_state_id
+group by p.purchase_id
+order by p.purchase_date desc, v.vendor_name asc;";
+
+        private string purchaseDetailQueryP1 = @"select p.sku, p.name as product_name, pp.product_qty, pp.product_price
+from products p, purchase_products pp
+where p.product_id = pp.product_id
+and pp.purchase_id = ";
+
+        public MySqlConnection connection;
+
+        private bool _isConnectionOpen;
+        public bool IsConnectionOpen
         {
+            get
+            {
+                return _isConnectionOpen;
+            }
+            set
+            {
+                _isConnectionOpen = value;
+                FirePropertyChanged("IsConnectionOpen");
+            }
+        }
 
+        public QueryManager()
+        {
+            connection = new MySqlConnection(connectString);
+            this.Open();
+        }
+
+        public string Test()
+        {
+            string a = string.Empty;
             try
             {
-                connection = new MySqlConnection(ConnectionURL);
+                connection = new MySqlConnection(connectString);
                 connection.Open();
-                Console.WriteLine("MySQL version :" + connection.ServerVersion.ToString());
 
+                a = "Test connection successful: MySQL version :" + connection.ServerVersion.ToString();
             }
             catch (MySqlException ex)
             {
                 Console.WriteLine(ex.ToString());
-
             }
             finally
             {
@@ -38,87 +100,139 @@ namespace NuRetail_NotFamous.Controllers
                 {
                     connection.Close();
                 }
-
-                if (connect.State == ConnectionState.Open)
-                {
-                    connect.Close();
-                }
             }
+            return a;
         }
 
-        MySqlDataReader read = null;
-        MySqlConnection connect = null;
-        MySqlCommand command = null;
-
-        private ObservableCollection<PurchaseOrderDetail> _PurchaseOD;
-
-        public ObservableCollection<PurchaseOrderDetail> PurchaseOD
+        public bool Open()
         {
-            get { return _PurchaseOD; }
-            set { _PurchaseOD = value; }
-        }
-
-        private void QueryPurchaseOrderDetails()
-        {
-            string Sku;
-            string Name;
-            int Quantity;
-            double UnitCost;
-            double ExtendedCost;
-
-            while(read.Read())
+            bool result = false;
+            try
             {
-
+                if (connection == null)
+                {
+                    connection = new MySqlConnection(connectString);
+                }
+                if (!IsConnectionOpen)
+                {
+                    connection.Open();
+                    IsConnectionOpen = true;
+                }
+                result = true;
             }
-            string SkuCommand = "SELECT" +
-                                 "FROM" +
-                                 "WHERE";
-            command = new MySqlCommand(SkuCommand);
-            command.Connection = connect;
-            string NameCommand = "SELECT" +
-                                "FROM" +
-                                "WHERE";
-            command = new MySqlCommand(NameCommand);
-            command.Connection = connect;
-            string QuantityCommand = "SELECT" +
-                                "FROM" +
-                                "WHERE";
-            command = new MySqlCommand(QuantityCommand);
-            command.Connection = connect;
-            string UnitCostCommand = "SELECT" +
-                                "FROM" +
-                                "WHERE";
-            command = new MySqlCommand(UnitCostCommand);
-            command.Connection = connect;
-            string ExtendedCostCommand = "SELECT" +
-                                "FROM" +
-                                "WHERE";
-            command = new MySqlCommand(ExtendedCostCommand);
-            command.Connection = connect;
+            catch (MySqlException ex)
+            {
+                IsConnectionOpen = false;
+                Console.WriteLine(ex.ToString());
+            }
+            return result;
         }
 
-
-        private void QueryPurchaseOrderSummary()
+        public void Close()
         {
-            long Id;
-            string Date;
-            Vendor Supplier;
-            double TotalCost;
-            PurchaseOrderStatus Status;
-            Warehouse ShippedToWareouse;
+            if (connection != null)
+            {
+                connection.Close();
+                IsConnectionOpen = false;
+            }
         }
 
-        private void QueryVendor()
+        public List<Vendor> QueryVendors()
         {
-            long Id;
-            string Name;
+            List<Vendor> result = new List<Vendor>();
+
+            MySqlCommand command = new MySqlCommand(vendorQuery, connection);
+            MySqlDataReader resultReader = command.ExecuteReader();
+
+            while (resultReader.Read())
+            {
+                Vendor current = new Vendor();
+                current.Id = (int)resultReader["vendor_id"];
+                current.Name = (string)resultReader["vendor_name"];
+                result.Add(current);
+            }
+            resultReader.Close();
+            return result;
         }
 
-        private void QueryWarehouse()
+        public List<Warehouse> QueryWarehouses()
         {
-            long Id;
-            string Name;
-            string Address;
+            List<Warehouse> result = new List<Warehouse>();
+
+            MySqlCommand command = new MySqlCommand(warehouseQuery, connection);
+            MySqlDataReader resultReader = command.ExecuteReader();
+
+            while (resultReader.Read())
+            {
+                Warehouse current = new Warehouse();
+
+                current.Id = (int)resultReader["warehouse_id"];
+                current.Name = (string)resultReader["name"];
+                current.Address = (string)resultReader["address"];
+                result.Add(current);
+            }
+
+            resultReader.Close();
+            return result;
         }
+
+        public PurchaseOrderDetail QueryPurchaseOrderDetail(int id)
+        {
+            PurchaseOrderDetail result = new PurchaseOrderDetail();
+
+            string query = purchaseDetailQueryP1;
+            query += id.ToString();
+            query += ";";
+
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader resultReader = command.ExecuteReader();
+
+            if (resultReader.Read())
+            {
+                
+
+                result.Sku = (string)resultReader["sku"];
+                result.ProductName = (string)resultReader["product_name"];
+                result.Quantity = (int)resultReader["product_qty"];
+                result.UnitCost = double.Parse((string)resultReader["product_price"]);
+                result.ExtendedCost = result.Quantity * result.UnitCost;
+            }
+
+            resultReader.Close();
+            return result;
+        }
+
+        public List<PurchaseOrderSummary> QueryPurchaseOrderSummaries()
+        {
+            List<PurchaseOrderSummary> result = new List<PurchaseOrderSummary>();
+
+            MySqlCommand command = new MySqlCommand(purchaseSummaryQuery, connection);
+            MySqlDataReader resultReader = command.ExecuteReader();
+
+            while (resultReader.Read())
+            {
+                PurchaseOrderSummary current = new PurchaseOrderSummary();
+
+                current.Id = (int)resultReader["purchase_id"];
+                current.Date = (DateTime)resultReader["purchase_date"];
+                current.SupplierName = (string)resultReader["vendor_name"];
+                current.TotalCost = (double)resultReader["total_price"];
+                current.Status = (string)resultReader["state"];
+                current.ShippedToWarehouse = (string)resultReader["warehouse"];
+                result.Add(current);
+            }
+
+            resultReader.Close();
+            return result;
+        }
+
+        private void FirePropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+
     }
 }

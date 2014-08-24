@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NuRetail_NotFamous.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,9 @@ namespace NuRetail_NotFamous
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Exit_1(object sender, ExitEventArgs e)
+        {
+            QueryManager q = (QueryManager)FindResource("QManager");
+        }
     }
 }

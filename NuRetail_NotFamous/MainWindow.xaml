@@ -1,25 +1,95 @@
 ﻿<Window x:Class="NuRetail_NotFamous.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="NuRetail Database Client [Team Not Famous]" Height="350" Width="525">
+        Title="NuRetail Database Client [Team Not Famous]" Height="400" Width="525">
+    
+    <Window.Resources>
+        <Style x:Key="leftLabelsStyle" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+        </Style>
+        <Style x:Key="rightLabelsStyle" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        </Style>
+    </Window.Resources>
+    
     <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Server">
+                <MenuItem Header="Open Connection" Click="OpenMenuItem_Click_1"></MenuItem>
+                <MenuItem Header="Close Connection" Click="CloseMenuItem_Click_2"></MenuItem>
+            </MenuItem>
+        </Menu>
+
+        <StatusBar DockPanel.Dock="Bottom" x:Name="WindowStatusBar">
+            <TextBlock x:Name="StatusTextBlock" Text="{Binding Path=IsConnectionOpen, Converter={StaticResource StatusBarConv}}"></TextBlock>
+        </StatusBar>
         <Button DockPanel.Dock="Bottom" Click="Refresh_Button_Click_1">Refresh</Button>
-        <TabControl SelectionChanged="TabControl_SelectionChanged_1">
+        <TabControl x:Name="WindowTabControl" SelectionChanged="TabControl_SelectionChanged_1">
             <TabItem Header="Warehouses">
-                <DataGrid x:Name="WarehouseDataGrid"></DataGrid>
+                <DataGrid x:Name="WarehouseDataGrid" IsReadOnly="True"></DataGrid>
             </TabItem>
-            
+
             <TabItem Header="Vendors">
-                <DataGrid x:Name="VendorsDataGrid"></DataGrid>
+                <DataGrid x:Name="VendorsDataGrid" IsReadOnly="True"></DataGrid>
             </TabItem>
-            
+
             <TabItem Header="Purchase Order Summary">
-                <DataGrid x:Name="PurchaseSumDataGrid" SelectionChanged="PurchaseSumDataGrid_SelectionChanged_1"></DataGrid>
+                <DataGrid x:Name="PurchaseSumDataGrid" SelectionChanged="PurchaseSumDataGrid_SelectionChanged_1" SelectionMode="Single"></DataGrid>
             </TabItem>
-            
+
             <TabItem Header="Purchase Order Details">
                 <DockPanel>
-                    <DataGrid x:Name="PurchaseDetDataGrid"></DataGrid>
+                    <Grid x:Name="PurchaseDetailGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="4*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource leftLabelsStyle}">Purchase ID:</Label>
+                        <Label Grid.Column="1" Grid.Row="0" Content="{Binding Path=Id}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource leftLabelsStyle}">Date:</Label>
+                        <Label Grid.Column="1" Grid.Row="1" Content="{Binding Path=Date}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="2" Style="{StaticResource leftLabelsStyle}">Supplier:</Label>
+                        <Label Grid.Column="1" Grid.Row="2" Content="{Binding Path=SupplierName}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="3" Style="{StaticResource leftLabelsStyle}">Status:</Label>
+                        <Label Grid.Column="1" Grid.Row="3" Content="{Binding Path=Status}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="4" Style="{StaticResource leftLabelsStyle}">Total:</Label>
+                        <Label Grid.Column="1" Grid.Row="4" Content="{Binding Path=TotalCost, Converter={StaticResource MoneyConv}}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="5" Style="{StaticResource leftLabelsStyle}">Warehouse:</Label>
+                        <Label Grid.Column="1" Grid.Row="5" Content="{Binding Path=ShippedToWarehouse}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="6" Style="{StaticResource leftLabelsStyle}">SKU:</Label>
+                        <Label Grid.Column="1" Grid.Row="6" Content="{Binding Path=Sku}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="7" Style="{StaticResource leftLabelsStyle}">Product:</Label>
+                        <Label Grid.Column="1" Grid.Row="7" Content="{Binding Path=ProductName}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="8" Style="{StaticResource leftLabelsStyle}">Quantity:</Label>
+                        <Label Grid.Column="1" Grid.Row="8" Content="{Binding Path=Quantity}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="9" Style="{StaticResource leftLabelsStyle}">Unit Cost:</Label>
+                        <Label Grid.Column="1" Grid.Row="9" Content="{Binding Path=UnitCost, Converter={StaticResource MoneyConv}}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                    </Grid>
                 </DockPanel>
             </TabItem>
         </TabControl>

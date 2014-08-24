@@ -9,11 +9,11 @@ namespace NuRetail_NotFamous.Models
 {
     public class PurchaseOrderSummary
     {
-        public long Id { get; set; }
-        public string Date { get; set; }
-        public Vendor Supplier { get; set; }
+        public int Id { get; set; }
+        public DateTime Date { get; set; }
+        public string SupplierName { get; set; }
         public double TotalCost { get; set; }
-        public PurchaseOrderStatus Status { get; set; }
-        public Warehouse ShippedToWareouse { get; set; }
+        public string Status { get; set; }
+        public string ShippedToWarehouse { get; set; }
     }
 }

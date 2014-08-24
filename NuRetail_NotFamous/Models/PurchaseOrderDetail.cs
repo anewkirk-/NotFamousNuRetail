@@ -9,7 +9,7 @@ namespace NuRetail_NotFamous.Models
     public class PurchaseOrderDetail
     {
         public string Sku { get; set; }
-        public string Name { get; set; }
+        public string ProductName { get; set; }
         public int Quantity { get; set; }
         public double UnitCost { get; set; }
         public double ExtendedCost { get; set; }

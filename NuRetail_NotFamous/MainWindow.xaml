@@ -40,6 +40,7 @@
 
             <TabItem Header="Purchase Order Details">
                 <DockPanel>
+<<<<<<< HEAD
                     <Grid x:Name="PurchaseDetailGrid">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -89,6 +90,18 @@
                         <Label Grid.Column="1" Grid.Row="9" Content="{Binding Path=TotalCost, Converter={StaticResource MoneyConv}}" Style="{StaticResource rightLabelsStyle}"></Label>
 
                     </Grid>
+=======
+                    <DataGrid x:Name="PurchaseDetailGrid">
+                        <DataGrid.Columns>
+                            
+                        </DataGrid.Columns>
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
+                    </DataGrid>
+>>>>>>> a00af9733a669e4c8f18fb0294a3d50a1c742f20
                 </DockPanel>
             </TabItem>
         </TabControl>

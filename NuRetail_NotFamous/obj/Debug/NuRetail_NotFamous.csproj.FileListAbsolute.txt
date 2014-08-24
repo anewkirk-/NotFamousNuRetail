@@ -27,3 +27,6 @@ C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\
 C:\Users\echo_drop\Documents\Visual Studio 2012\Projects\NuRetail_NotFamous\NuRetail_NotFamous\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\echo_drop\Documents\Visual Studio 2012\Projects\NuRetail_NotFamous\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous_MarkupCompile.lref
 C:\Users\echo_drop\Documents\Visual Studio 2012\Projects\NuRetail_NotFamous\NuRetail_NotFamous\obj\Debug\App.baml
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\NuRetail_NotFamous_MarkupCompile.lref
+C:\Users\James Taylor\Documents\GitHub\NotFamousNuRetail\NuRetail_NotFamous\obj\Debug\App.baml

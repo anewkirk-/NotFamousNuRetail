@@ -11,6 +11,10 @@
                 <MenuItem Header="Query and Populate Vendors" Click="VendorQMenuItem_Click_1"></MenuItem>
             </MenuItem>
         </Menu>
+        
+        <StatusBar DockPanel.Dock="Bottom" x:Name="WindowStatusBar">
+            <TextBlock x:Name="StatusTextBlock" Text="{Binding Path=IsConnectionOpen, Converter={StaticResource StatusBarConv}}"></TextBlock>
+        </StatusBar>
         <Button DockPanel.Dock="Bottom" Click="Refresh_Button_Click_1">Refresh</Button>
         <TabControl x:Name="WindowTabControl" SelectionChanged="TabControl_SelectionChanged_1">
             <TabItem Header="Warehouses">

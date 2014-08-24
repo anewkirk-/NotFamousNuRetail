@@ -2,9 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:sql="clr-namespace:NuRetail_NotFamous.Controllers"
+             xmlns:conv="clr-namespace:NuRetail_NotFamous.Converters"
              StartupUri="MainWindow.xaml"
              Exit="Application_Exit_1">
     <Application.Resources>
         <sql:QueryManager x:Key="QManager" ></sql:QueryManager>
+        <conv:BoolToStatusbarTextConverter x:Key="StatusBarConv"></conv:BoolToStatusbarTextConverter>
     </Application.Resources>
 </Application>

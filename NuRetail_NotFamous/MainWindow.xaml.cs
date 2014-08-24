@@ -28,6 +28,7 @@ namespace NuRetail_NotFamous
         {
             InitializeComponent();
             CurrentQueryManager = (QueryManager)FindResource("QManager");
+            StatusTextBlock.DataContext = CurrentQueryManager;
         }
 
         private void RefreshWarehouses()
@@ -73,7 +74,9 @@ namespace NuRetail_NotFamous
                         RefreshVendors();
                         break;
                     case 2:
-                        RefreshPurchaseSummaries();
+                        WindowTabControl.SelectedIndex = 0;
+                        throw new NotImplementedException();
+                        //RefreshPurchaseSummaries();
                         break;
                     case 3:
                         WindowTabControl.SelectedIndex = 0;

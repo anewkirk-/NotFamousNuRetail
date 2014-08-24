@@ -4,6 +4,7 @@ using NuRetail_NotFamous.nEnums;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,10 @@ using System.Threading.Tasks;
 
 namespace NuRetail_NotFamous.Controllers
 {
-    public class QueryManager
+    public class QueryManager : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private string connectString = @"server=localhost; Port=3306; database=nuretail; user=notfamous;
             password=firemonkey";
 
@@ -38,7 +41,19 @@ order by vendor_name;";
 
         public MySqlConnection connection;
 
-        public bool IsConnectionOpen { get; set; }
+        private bool _isConnectionOpen;
+        public bool IsConnectionOpen
+        {
+            get
+            {
+                return _isConnectionOpen;
+            }
+            set
+            {
+                _isConnectionOpen = value;
+                FirePropertyChanged("IsConnectionOpen");
+            }
+        }
 
         public QueryManager()
         {
@@ -158,6 +173,14 @@ order by vendor_name;";
             Warehouse ShippedToWareouse;
 
             
+        }
+
+        private void FirePropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
         }
 
     }

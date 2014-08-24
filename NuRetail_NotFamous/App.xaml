@@ -5,6 +5,6 @@
              StartupUri="MainWindow.xaml"
              Exit="Application_Exit_1">
     <Application.Resources>
-        <sql:QueryManager x:Key="QManager"></sql:QueryManager>
+        <sql:QueryManager x:Key="QManager" ></sql:QueryManager>
     </Application.Resources>
 </Application>

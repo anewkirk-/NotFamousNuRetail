@@ -8,6 +8,7 @@
                 <MenuItem Header="Open Connection" Click="OpenMenuItem_Click_1"></MenuItem>
                 <MenuItem Header="Close Connection" Click="CloseMenuItem_Click_2"></MenuItem>
                 <MenuItem Header="Query and Populate Warehouses" Click="WarehouseQMenuItem_Click_3"></MenuItem>
+                <MenuItem Header="Query and Populate Vendors" Click="VendorQMenuItem_Click_1"></MenuItem>
             </MenuItem>
         </Menu>
         <Button DockPanel.Dock="Bottom" Click="Refresh_Button_Click_1">Refresh</Button>

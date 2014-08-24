@@ -33,7 +33,6 @@ namespace NuRetail_NotFamous
         private void RefreshWarehouses()
         {
             List<Warehouse> w = CurrentQueryManager.QueryWarehouses();
-            WarehouseDataGrid.Items.Clear();
             WarehouseDataGrid.ItemsSource = w;
         }
 
@@ -44,10 +43,24 @@ namespace NuRetail_NotFamous
 
         private void RefreshVendors()
         {
-            throw new NotImplementedException();
+            List<Vendor> v = CurrentQueryManager.QueryVendors();
+            VendorsDataGrid.ItemsSource = v;
         }
 
         private void Refresh_Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (CurrentQueryManager.IsConnectionOpen)
+            {
+                RefreshCurrentTab();
+            }
+            else
+            {
+                CurrentQueryManager.Open();
+                Refresh_Button_Click_1(null, null);
+            }
+        }
+
+        private void RefreshCurrentTab()
         {
             switch (WindowTabControl.SelectedIndex)
             {
@@ -67,7 +80,7 @@ namespace NuRetail_NotFamous
         {
             TabControl tc = sender as TabControl;
             TabItem selected = tc.SelectedItem as TabItem;
-            //Refresh data in selected tab
+            RefreshCurrentTab();
         }
 
         private void PurchaseSumDataGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -88,6 +101,11 @@ namespace NuRetail_NotFamous
         private void WarehouseQMenuItem_Click_3(object sender, RoutedEventArgs e)
         {
             RefreshWarehouses();
+        }
+
+        private void VendorQMenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            RefreshVendors();
         }
 
 

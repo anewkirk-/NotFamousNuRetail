@@ -13,8 +13,6 @@ namespace NuRetail_NotFamous.Controllers
 {
     public class QueryManager
     {
-        private MySqlConnection connection = new MySqlConnection();
-
         private string connectString = @"server=localhost; Port=3306; database=nuretail; user=notfamous;
             password=firemonkey";
 
@@ -30,12 +28,23 @@ namespace NuRetail_NotFamous.Controllers
 from warehouses w, addresses a
 where w.address_id = a.address_id;";
 
-        private string vendorQuery = "";
+        private string vendorQuery = @"select vendor_id, vendor_name
+from vendors
+order by vendor_name;";
 
         private string purchaseSummaryQuery = "";
 
         private string purchaseDetailQuery = "";
 
+        public MySqlConnection connection;
+
+        public bool IsConnectionOpen { get; set; }
+
+        public QueryManager()
+        {
+            connection = new MySqlConnection(connectString);
+            IsConnectionOpen = false;
+        }
 
         public string Test()
         {
@@ -70,9 +79,11 @@ where w.address_id = a.address_id;";
                     connection = new MySqlConnection(connectString);
                 }
                 connection.Open();
+                IsConnectionOpen = true;
             }
             catch (MySqlException ex)
             {
+                IsConnectionOpen = false;
                 Console.WriteLine(ex.ToString());
             }
         }
@@ -82,13 +93,26 @@ where w.address_id = a.address_id;";
             if (connection != null)
             {
                 connection.Close();
+                IsConnectionOpen = false;
             }
         }
 
-        private void QueryVendors()
+        public List<Vendor> QueryVendors()
         {
-            long Id;
-            string Name;
+            List<Vendor> result = new List<Vendor>();
+
+            MySqlCommand command = new MySqlCommand(vendorQuery, connection);
+            MySqlDataReader resultReader = command.ExecuteReader();
+
+            while (resultReader.Read())
+            {
+                Vendor current = new Vendor();
+                current.Id = (int)resultReader["vendor_id"];
+                current.Name = (string)resultReader["vendor_name"];
+                result.Add(current);
+            }
+            resultReader.Close();
+            return result;
         }
 
         public List<Warehouse> QueryWarehouses()
@@ -108,10 +132,7 @@ where w.address_id = a.address_id;";
                 result.Add(current);
             }
 
-            //close Data Reader
             resultReader.Close();
-
-            //return list to be displayed
             return result;
         }
 

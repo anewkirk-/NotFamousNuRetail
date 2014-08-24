@@ -14,6 +14,6 @@ namespace NuRetail_NotFamous.Models
         public string SupplierName { get; set; }
         public double TotalCost { get; set; }
         public string Status { get; set; }
-        public string ShippedToWareouse { get; set; }
+        public string ShippedToWarehouse { get; set; }
     }
 }

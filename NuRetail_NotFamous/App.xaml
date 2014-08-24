@@ -8,5 +8,6 @@
     <Application.Resources>
         <sql:QueryManager x:Key="QManager" ></sql:QueryManager>
         <conv:BoolToStatusbarTextConverter x:Key="StatusBarConv"></conv:BoolToStatusbarTextConverter>
+        <conv:DoubleToMoneyStringConverter x:Key="MoneyConv"></conv:DoubleToMoneyStringConverter>
     </Application.Resources>
 </Application>

@@ -189,13 +189,13 @@ and pp.purchase_id = ";
 
             if (resultReader.Read())
             {
-                PurchaseOrderDetail current = new PurchaseOrderDetail();
+                
 
-                current.Sku = (string)resultReader["sku"];
-                current.ProductName = (string)resultReader["product_name"];
-                current.Quantity = (int)resultReader["product_qty"];
-                current.UnitCost = double.Parse((string)resultReader["product_price"]);
-                current.ExtendedCost = current.Quantity * current.UnitCost;
+                result.Sku = (string)resultReader["sku"];
+                result.ProductName = (string)resultReader["product_name"];
+                result.Quantity = (int)resultReader["product_qty"];
+                result.UnitCost = double.Parse((string)resultReader["product_price"]);
+                result.ExtendedCost = result.Quantity * result.UnitCost;
             }
 
             resultReader.Close();
@@ -218,7 +218,7 @@ and pp.purchase_id = ";
                 current.SupplierName = (string)resultReader["vendor_name"];
                 current.TotalCost = (double)resultReader["total_price"];
                 current.Status = (string)resultReader["state"];
-                current.ShippedToWareouse = (string)resultReader["warehouse"];
+                current.ShippedToWarehouse = (string)resultReader["warehouse"];
                 result.Add(current);
             }
 

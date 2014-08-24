@@ -68,6 +68,26 @@
                         <Label Grid.Column="0" Grid.Row="2" Style="{StaticResource leftLabelsStyle}">Supplier:</Label>
                         <Label Grid.Column="1" Grid.Row="2" Content="{Binding Path=SupplierName}" Style="{StaticResource rightLabelsStyle}"></Label>
 
+                        <Label Grid.Column="0" Grid.Row="3" Style="{StaticResource leftLabelsStyle}">Status:</Label>
+                        <Label Grid.Column="1" Grid.Row="3" Content="{Binding Path=Status}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="4" Style="{StaticResource leftLabelsStyle}">Total:</Label>
+                        <Label Grid.Column="1" Grid.Row="4" Content="{Binding Path=TotalCost, Converter={StaticResource MoneyConv}}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="5" Style="{StaticResource leftLabelsStyle}">Warehouse:</Label>
+                        <Label Grid.Column="1" Grid.Row="5" Content="{Binding Path=ShippedToWarehouse}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="6" Style="{StaticResource leftLabelsStyle}">SKU:</Label>
+                        <Label Grid.Column="1" Grid.Row="6" Content="{Binding Path=Sku}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="7" Style="{StaticResource leftLabelsStyle}">Product:</Label>
+                        <Label Grid.Column="1" Grid.Row="7" Content="{Binding Path=ProductName}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="8" Style="{StaticResource leftLabelsStyle}">Quantity:</Label>
+                        <Label Grid.Column="1" Grid.Row="8" Content="{Binding Path=Quantity}" Style="{StaticResource rightLabelsStyle}"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="9" Style="{StaticResource leftLabelsStyle}">Unit Cost:</Label>
+                        <Label Grid.Column="1" Grid.Row="9" Content="{Binding Path=UnitCost, Converter={StaticResource MoneyConv}}" Style="{StaticResource rightLabelsStyle}"></Label>
 
                     </Grid>
                 </DockPanel>

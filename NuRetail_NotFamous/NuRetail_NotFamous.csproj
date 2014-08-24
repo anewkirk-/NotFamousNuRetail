@@ -64,6 +64,7 @@
     </Compile>
     <Compile Include="Controllers\QueryManager.cs" />
     <Compile Include="Converters\BoolToStatusbarTextConverter.cs" />
+    <Compile Include="Converters\DoubleToMoneyStringConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

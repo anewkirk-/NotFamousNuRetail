@@ -1,7 +1,8 @@
 ﻿<Window x:Class="NuRetail_NotFamous.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="NuRetail Database Client [Team Not Famous]" Height="400" Width="525">
+        Title="NuRetail Database Client [Team Not Famous]" Height="400" Width="525"
+        KeyDown="Window_KeyDown_1">
     
     <Window.Resources>
         <Style x:Key="leftLabelsStyle" TargetType="Label">
@@ -40,8 +41,11 @@
 
             <TabItem Header="Purchase Order Details">
                 <DockPanel>
-<<<<<<< HEAD
-                    <Grid x:Name="PurchaseDetailGrid">
+                    <Grid DockPanel.Dock="Top" x:Name="PurchaseInfoGrid" Background="#F0F0F0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -49,59 +53,27 @@
                             <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="4*"/>
-                        </Grid.ColumnDefinitions>
+                        <Label Style="{StaticResource leftLabelsStyle}">Purchase ID:</Label>
+                        <Label Grid.Row="0" Grid.Column="1" Content="{Binding Path=Id}"></Label>
+                               
+                        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource leftLabelsStyle}">Date:</Label>
+                        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Path=Date}"></Label>
 
-                        <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource leftLabelsStyle}">Purchase ID:</Label>
-                        <Label Grid.Column="1" Grid.Row="0" Content="{Binding Path=Id}" Style="{StaticResource rightLabelsStyle}"></Label>
+                        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource leftLabelsStyle}">Supplier:</Label>
+                        <Label Grid.Row="2" Grid.Column="1" Content="{Binding Path=SupplierName}"></Label>
 
-                        <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource leftLabelsStyle}">Date:</Label>
-                        <Label Grid.Column="1" Grid.Row="1" Content="{Binding Path=Date}" Style="{StaticResource rightLabelsStyle}"></Label>
+                        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource leftLabelsStyle}">Status:</Label>
+                        <Label Grid.Row="3" Grid.Column="1" Content="{Binding Path=Status}"></Label>
 
-                        <Label Grid.Column="0" Grid.Row="2" Style="{StaticResource leftLabelsStyle}">Supplier:</Label>
-                        <Label Grid.Column="1" Grid.Row="2" Content="{Binding Path=SupplierName}" Style="{StaticResource rightLabelsStyle}"></Label>
+                        <Label  Grid.Row="4" Grid.Column="0" Style="{StaticResource leftLabelsStyle}">Warehouse:</Label>
+                        <Label Grid.Row="4" Grid.Column="1" Content="{Binding Path=ShippedToWarehouse}"></Label>
 
-                        <Label Grid.Column="0" Grid.Row="3" Style="{StaticResource leftLabelsStyle}">Status:</Label>
-                        <Label Grid.Column="1" Grid.Row="3" Content="{Binding Path=Status}" Style="{StaticResource rightLabelsStyle}"></Label>
-
-                        <Label Grid.Column="0" Grid.Row="4" Style="{StaticResource leftLabelsStyle}">Warehouse:</Label>
-                        <Label Grid.Column="1" Grid.Row="4" Content="{Binding Path=ShippedToWarehouse}" Style="{StaticResource rightLabelsStyle}"></Label>
-
-                        <Label Grid.Column="0" Grid.Row="5" Style="{StaticResource leftLabelsStyle}">SKU:</Label>
-                        <Label Grid.Column="1" Grid.Row="5" Content="{Binding Path=Sku}" Style="{StaticResource rightLabelsStyle}"></Label>
-
-                        <Label Grid.Column="0" Grid.Row="6" Style="{StaticResource leftLabelsStyle}">Product:</Label>
-                        <Label Grid.Column="1" Grid.Row="6" Content="{Binding Path=ProductName}" Style="{StaticResource rightLabelsStyle}"></Label>
-
-                        <Label Grid.Column="0" Grid.Row="7" Style="{StaticResource leftLabelsStyle}">Quantity:</Label>
-                        <Label Grid.Column="1" Grid.Row="7" Content="{Binding Path=Quantity}" Style="{StaticResource rightLabelsStyle}"></Label>
-
-                        <Label Grid.Column="0" Grid.Row="8" Style="{StaticResource leftLabelsStyle}">Unit Cost:</Label>
-                        <Label Grid.Column="1" Grid.Row="8" Content="{Binding Path=UnitCost, Converter={StaticResource MoneyConv}}" Style="{StaticResource rightLabelsStyle}"></Label>
-
-                        <Label Grid.Column="0" Grid.Row="9" Style="{StaticResource leftLabelsStyle}">Total:</Label>
-                        <Label Grid.Column="1" Grid.Row="9" Content="{Binding Path=TotalCost, Converter={StaticResource MoneyConv}}" Style="{StaticResource rightLabelsStyle}"></Label>
+                        <Label  Grid.Row="5" Grid.Column="0" Style="{StaticResource leftLabelsStyle}">Total:</Label>
+                        <Label Grid.Row="5" Grid.Column="1" Content="{Binding Path=TotalCost, Converter={StaticResource MoneyConv}}"></Label>
 
                     </Grid>
-=======
-                    <DataGrid x:Name="PurchaseDetailGrid">
-                        <DataGrid.Columns>
-                            
-                        </DataGrid.Columns>
-                        <DataGrid.RowDetailsTemplate>
-                            <DataTemplate>
-                                
-                            </DataTemplate>
-                        </DataGrid.RowDetailsTemplate>
-                    </DataGrid>
->>>>>>> a00af9733a669e4c8f18fb0294a3d50a1c742f20
+                    <DataGrid x:Name="PurchaseDetailGrid" AutoGeneratingColumn="PurchaseDetailGrid_AutoGeneratingColumn_1"/>
                 </DockPanel>
             </TabItem>
         </TabControl>

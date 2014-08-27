@@ -56,10 +56,12 @@ and p.purchase_state = ps.purchase_state_id
 group by p.purchase_id
 order by p.purchase_date desc, v.vendor_name asc;";
 
-        private string purchaseDetailQueryP1 = @"select p.sku, p.name as product_name, pp.product_qty, pp.product_price
+        private string purchaseDetailQueryP1 = @"select p.sku, p.name as product_name, pp.product_qty, pp.product_price, (pp.product_qty * pp.product_price) as extended_price
 from products p, purchase_products pp
 where p.product_id = pp.product_id
 and pp.purchase_id = ";
+
+        private string purchaseDetailQueryP2 = "\norder by p.sku desc;";
 
         public MySqlConnection connection;
 
@@ -185,12 +187,12 @@ and pp.purchase_id = ";
 
             string query = purchaseDetailQueryP1;
             query += id.ToString();
-            query += ";";
+            query += purchaseDetailQueryP2;
 
             MySqlCommand command = new MySqlCommand(query, connection);
             MySqlDataReader resultReader = command.ExecuteReader();
 
-            if (resultReader.Read())
+            while (resultReader.Read())
             {
                 PurchaseOrderDetail current = new PurchaseOrderDetail();
 
@@ -198,7 +200,7 @@ and pp.purchase_id = ";
                 current.ProductName = (string)resultReader["product_name"];
                 current.Quantity = (int)resultReader["product_qty"];
                 current.UnitCost = double.Parse((string)resultReader["product_price"]);
-                current.ExtendedCost = current.Quantity * current.UnitCost;
+                current.ExtendedCost = (double)resultReader["extended_price"];
                 result.Add(current);
             }
 

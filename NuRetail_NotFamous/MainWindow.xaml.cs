@@ -33,7 +33,6 @@ namespace NuRetail_NotFamous
             InitializeComponent();
             CurrentQueryManager = (QueryManager)FindResource("QManager");
             StatusTextBlock.DataContext = CurrentQueryManager;
-            SetPurchaseDetGridLines();
         }
 
         private void RefreshWarehouses()
@@ -62,14 +61,8 @@ namespace NuRetail_NotFamous
 
                 SelectedPurchaseOrder = p.Id;
                 List<PurchaseOrderDetail> products = CurrentQueryManager.QueryPurchaseOrderDetail(p.Id);
-                List<FullPurchaseInfo> result = new List<FullPurchaseInfo>();
-                foreach (PurchaseOrderDetail pod in products)
-                {
-                    FullPurchaseInfo fpi = new FullPurchaseInfo(p, pod);
-                    result.Add(fpi);
-                }
-                
-                PurchaseDetailGrid.DataContext = result;
+                PurchaseInfoGrid.DataContext = p;
+                PurchaseDetailGrid.ItemsSource = products;
                 WindowTabControl.SelectedIndex = 3;
             }
             
@@ -144,24 +137,34 @@ namespace NuRetail_NotFamous
             CurrentQueryManager.Close();
         }
 
-        private void SetPurchaseDetGridLines()
+        private void PurchaseDetailGrid_AutoGeneratingColumn_1(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            SolidColorBrush b = new SolidColorBrush(Colors.Black);
-            for (int i = 0; i < 11; i++)
+            switch(e.Column.Header.ToString())
             {
-                Rectangle r = new Rectangle();
-                r.Stroke = b;
-                r.StrokeThickness = 0.1;
-                //PurchaseDetailGrid.Children.Add(r);
-                Grid.SetRow(r, i);
-                Grid.SetColumn(r, 0);
+                case "Sku":
+                    e.Column.Header = "SKU";
+                    break;
+                case "ProductName":
+                    e.Column.Header = "Product";
+                    break;
+                case "UnitCost":
+                    e.Column.Header = "Unit Cost";
+                    break;
+                case "ExtendedCost":
+                    e.Column.Header = "Extended Cost";
+                    break;
+                default:
+                    break;
+            }
+        }
 
-                Rectangle r2 = new Rectangle();
-                r2.Stroke = b;
-                r2.StrokeThickness = 0.1;
-                //PurchaseDetailGrid.Children.Add(r2);
-                Grid.SetRow(r2, i);
-                Grid.SetColumn(r2, 1);
+        private void Window_KeyDown_1(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Escape:
+                    Environment.Exit(0);
+                    break;
             }
         }
     }

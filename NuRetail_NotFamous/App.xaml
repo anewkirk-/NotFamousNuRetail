@@ -1,12 +1,13 @@
 ﻿<Application x:Class="NuRetail_NotFamous.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:sql="clr-namespace:NuRetail_NotFamous.Controllers"
+             xmlns:cont="clr-namespace:NuRetail_NotFamous.Controllers"
              xmlns:conv="clr-namespace:NuRetail_NotFamous.Converters"
              StartupUri="MainWindow.xaml"
              Exit="Application_Exit_1">
     <Application.Resources>
-        <sql:QueryManager x:Key="QManager" ></sql:QueryManager>
+        <cont:QueryManager x:Key="QManager" ></cont:QueryManager>
+        <cont:ImageFetcher x:Key="CImageFetcher"></cont:ImageFetcher>
         <conv:BoolToStatusbarTextConverter x:Key="StatusBarConv"></conv:BoolToStatusbarTextConverter>
         <conv:DoubleToMoneyStringConverter x:Key="MoneyConv"></conv:DoubleToMoneyStringConverter>
     </Application.Resources>

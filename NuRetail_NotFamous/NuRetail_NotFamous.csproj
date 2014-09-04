@@ -37,6 +37,7 @@
     <Reference Include="MySql.Data, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -62,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\ImageFetcher.cs" />
     <Compile Include="Controllers\QueryManager.cs" />
     <Compile Include="Converters\BoolToStatusbarTextConverter.cs" />
     <Compile Include="Converters\DoubleToMoneyStringConverter.cs" />
@@ -71,9 +73,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\CustomerOrderDetail.cs" />
+    <Compile Include="Models\CustomerOrderSummary.cs" />
     <Compile Include="Models\FullPurchaseInfo.cs" />
+    <Compile Include="Models\ProductImage.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Models\PurchaseOrderDetail.cs" />
     <Compile Include="Models\PurchaseOrderSummary.cs" />
+    <Compile Include="Models\Shipment.cs" />
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="Models\Warehouse.cs" />
     <Compile Include="nEnums\PurchaseOrderStatus.cs" />

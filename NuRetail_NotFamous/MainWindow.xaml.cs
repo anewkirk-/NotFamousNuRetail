@@ -24,7 +24,9 @@ namespace NuRetail_NotFamous
     {
 
         public QueryManager CurrentQueryManager { get; set; }
+        public ImageFetcher CurrentImageFetcher { get; set; }
         public int SelectedPurchaseOrder { get; set; }
+        public int SelectedCustomerOrder { get; set; }
 
         public MainWindow()
         {
@@ -32,7 +34,30 @@ namespace NuRetail_NotFamous
 
             InitializeComponent();
             CurrentQueryManager = (QueryManager)FindResource("QManager");
+            CurrentImageFetcher = (ImageFetcher)FindResource("CImageFetcher");
             StatusTextBlock.DataContext = CurrentQueryManager;
+        }
+
+        private void RefreshProducts()
+        {
+            List<Product> p = CurrentQueryManager.QueryProducts();
+            ProductsDataGrid.ItemsSource = p;
+        }
+
+        private void RefreshOrderSummaries()
+        {
+            List<CustomerOrderSummary> cos = CurrentQueryManager.QueryCustomerOrderSummaries();
+            OrderSumDataGrid.ItemsSource = cos;
+        }
+
+        private void RefreshOrderDetail()
+        {
+            throw new NotImplementedException();
+            //CustomerOrderSummary c = (CustomerOrderSummary)OrderSumDataGrid.SelectedItem;
+            //if (c != null)
+            //{
+            //    SelectedCustomerOrder = c.OrderId;
+            //}
         }
 
         private void RefreshWarehouses()

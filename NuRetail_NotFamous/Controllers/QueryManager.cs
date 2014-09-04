@@ -85,30 +85,6 @@ and pp.purchase_id = ";
             this.Open();
         }
 
-        public string Test()
-        {
-            string a = string.Empty;
-            try
-            {
-                connection = new MySqlConnection(connectString);
-                connection.Open();
-
-                a = "Test connection successful: MySQL version :" + connection.ServerVersion.ToString();
-            }
-            catch (MySqlException ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-            finally
-            {
-                if (connection != null)
-                {
-                    connection.Close();
-                }
-            }
-            return a;
-        }
-
         public bool Open()
         {
             bool result = false;
@@ -230,6 +206,12 @@ and pp.purchase_id = ";
 
             resultReader.Close();
             return result;
+        }
+
+        public List<CustomerOrderSummary> QueryCustomerOrderSummaries()
+        {
+            throw new NotImplementedException();
+            //List<CustomerOrderSummary> result = new List<CustomerOrderSummary>();
         }
 
         private void FirePropertyChanged(string property)

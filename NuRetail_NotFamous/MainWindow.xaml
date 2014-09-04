@@ -1,7 +1,7 @@
 ﻿<Window x:Class="NuRetail_NotFamous.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="NuRetail Database Client [Team Not Famous]" Height="400" Width="525"
+        Title="NuRetail Database Client [Team Not Famous]" Height="400" Width="600"
         KeyDown="Window_KeyDown_1">
     
     <Window.Resources>
@@ -39,7 +39,7 @@
                 <DataGrid x:Name="PurchaseSumDataGrid" SelectionChanged="PurchaseSumDataGrid_SelectionChanged_1" SelectionMode="Single"></DataGrid>
             </TabItem>
 
-            <TabItem Header="Purchase Order Details">
+            <TabItem Header="Purchase Order Detail">
                 <DockPanel>
                     <Grid DockPanel.Dock="Top" x:Name="PurchaseInfoGrid" Background="#F0F0F0">
                         <Grid.ColumnDefinitions>
@@ -76,6 +76,16 @@
                     <DataGrid x:Name="PurchaseDetailGrid" AutoGeneratingColumn="PurchaseDetailGrid_AutoGeneratingColumn_1"/>
                 </DockPanel>
             </TabItem>
+            
+            <TabItem Header="Products">
+                <DataGrid x:Name="ProductsDataGrid"></DataGrid>
+            </TabItem>
+            
+            <TabItem Header="Customer Order Summary">
+                <DataGrid x:Name="OrderSumDataGrid"></DataGrid>
+            </TabItem>
+            
+            <TabItem Header="Customer Order Detail"></TabItem>
         </TabControl>
     </DockPanel>
 </Window>

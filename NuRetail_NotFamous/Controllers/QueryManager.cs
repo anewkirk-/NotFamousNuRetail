@@ -275,5 +275,10 @@ and pp.purchase_id = ";
             }
         }
 
+
+        internal List<Product> QueryProducts()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -16,5 +16,7 @@ namespace NuRetail_NotFamous.Models
         public string Description { get; set; }
         public ProductImage PrimaryImage { get; set; }
         public List<ProductImage> SecondaryImages { get; set; }
+        public string PrimaryImageURL { get; set; }
+        public string SecondaryImageURL { get; set; }
     }
 }

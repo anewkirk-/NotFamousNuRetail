@@ -37,6 +37,14 @@ where w.address_id = a.address_id;";
         private string vendorQuery = @"select vendor_id, vendor_name
 from vendors
 order by vendor_name;";
+        //added this
+        private string imageQuery = @"select image_url
+from product_images
+order by image_id";
+        //added this
+        private string productQuery = @"select product_id, product_name, msrp, sku, description, upc
+from products
+order by product_name ";
 
         private string purchaseSummaryQuery = @"select p.purchase_id, 
 	p.purchase_date, 
@@ -116,6 +124,51 @@ and pp.purchase_id = ";
                 connection.Close();
                 IsConnectionOpen = false;
             }
+        }
+
+        //added this, still trying to fix the link between product images and products
+        public List<Product> QueryProducts()
+        {
+            List<Product> productResult = new List<Product>();
+
+            MySqlCommand command = new MySqlCommand(productQuery, connection);
+            MySqlDataReader resultReader = command.ExecuteReader();
+
+            while (resultReader.Read())
+            {
+                Product current = new Product();
+                current.ProductId = (int)resultReader["product_id"];
+                current.ProductName = (string)resultReader["product_name"];
+                current.Msrp = (double)resultReader["msrp"];
+                current.Description = (string)resultReader["description"];
+                current.Sku = (string)resultReader["sku"]; 
+                current.Upc = (long)resultReader["upc"];
+                //check if its the right primaryimageurl  
+                current.PrimaryImageURL = (string)resultReader["image_url"];
+                //need to get seconday image
+                productResult.Add(current);
+            }
+            resultReader.Close();
+            return productResult;
+
+        }
+
+        //added this
+        public List<ProductImage> QueryProductImages()
+        {
+            List<ProductImage> imageResult = new List<ProductImage>();
+
+            MySqlCommand command = new MySqlCommand(imageQuery, connection);
+            MySqlDataReader resultReader = command.ExecuteReader();
+
+            while (resultReader.Read())
+            {
+                ProductImage image = new ProductImage();
+                image.Url = (string)resultReader["image_url"];
+                imageResult.Add(image);
+            }
+            resultReader.Close();
+            return imageResult;
         }
 
         public List<Vendor> QueryVendors()

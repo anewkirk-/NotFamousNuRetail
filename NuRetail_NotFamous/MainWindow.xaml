@@ -78,10 +78,10 @@
             </TabItem>
             
             <TabItem Header="Products">
-                <DataGrid x:Name="ProductsDataGrid" AutoGeneratingColumn="ProductsDataGrid_AutoGeneratingColumn_1"></DataGrid>
+                <DataGrid x:Name="ProductsDataGrid" AutoGeneratingColumn="ProductsDataGrid_AutoGeneratingColumn_1" SelectionChanged="ProductsDataGrid_SelectionChanged_1" SelectionMode="Single"></DataGrid>
             </TabItem>
             
-            <TabItem Header="Product Detail">
+            <TabItem Header="Product Detail" x:Name="ProductDetailTab">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Orientation="Horizontal">
@@ -92,10 +92,10 @@
                                 <Label>UPC:</Label>
                             </StackPanel>
                             <StackPanel>
-                                <Label x:Name="ProductNameLabel">t</Label>
-                                <Label x:Name="ProductMsrpLabel">h</Label>
-                                <Label x:Name="ProductSkuLabel">s</Label>
-                                <Label x:Name="ProductUpcLabel">s</Label>
+                                <Label x:Name="ProductNameLabel" Content="{Binding ProductName}"></Label>
+                                <Label x:Name="ProductMsrpLabel"></Label>
+                                <Label x:Name="ProductSkuLabel"></Label>
+                                <Label x:Name="ProductUpcLabel"></Label>
                             </StackPanel>
                         </StackPanel>
                         <Image x:Name="PrimaryImageBox" Width="100" Height="100"></Image>

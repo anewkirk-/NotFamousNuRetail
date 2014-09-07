@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Drawing;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -14,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using NuRetail_NotFamous.Controllers;
 using NuRetail_NotFamous.Models;
+using System.IO;
 
 namespace NuRetail_NotFamous
 {
@@ -31,7 +33,7 @@ namespace NuRetail_NotFamous
 
         public MainWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
 
             InitializeComponent();
             CurrentQueryManager = (QueryManager)FindResource("QManager");
@@ -91,7 +93,7 @@ namespace NuRetail_NotFamous
                 PurchaseDetailGrid.ItemsSource = products;
                 WindowTabControl.SelectedIndex = 3;
             }
-            
+
         }
 
         private void Refresh_Button_Click_1(object sender, RoutedEventArgs e)
@@ -143,12 +145,27 @@ namespace NuRetail_NotFamous
         private void RefreshProductDetail()
         {
             Product p = (Product)ProductsDataGrid.SelectedItem;
+            Dispatcher.Invoke((Action)(() =>
+                {
+                    ;
+                    if (p != null)
+                    {
+                        ProductDetailTab.DataContext = p;
+                        //PrimaryImageBox = CurrentImageFetcher.FetchImage(p.PrimaryImage.Url);
+                        //ProductInfoStackPanel.Children.RemoveAt(1);
+                        //ProductInfoStackPanel.Children.Add(
+                        System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(CurrentImageFetcher.FetchImage(p.PrimaryImage.Url));
+                        MemoryStream ms = new MemoryStream();
+                        bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                        ms.Position = 0;
+                        BitmapImage bi = new BitmapImage();
+                        bi.BeginInit();
+                        bi.StreamSource = ms;
+                        bi.EndInit();
 
-            if (p != null)
-            {
-                ProductDetailTab.DataContext = p;
-                PrimaryImageBox.Source = 
-            }
+                        PrimaryImageBox.Source = bi;
+                    }
+                }));
         }
 
         private void TabControl_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -182,7 +199,7 @@ namespace NuRetail_NotFamous
 
         private void PurchaseDetailGrid_AutoGeneratingColumn_1(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            switch(e.Column.Header.ToString())
+            switch (e.Column.Header.ToString())
             {
                 case "Sku":
                     e.Column.Header = "SKU";
@@ -236,6 +253,17 @@ namespace NuRetail_NotFamous
                 case Key.Escape:
                     Environment.Exit(0);
                     break;
+            }
+        }
+
+        private void ProductsDataGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            Product selected = (Product)ProductsDataGrid.SelectedItem;
+            if (selected != null)
+            {
+                SelectedProduct = (int)selected.ProductId;
+                RefreshProductDetail();
+                WindowTabControl.SelectedIndex = 5;
             }
         }
     }

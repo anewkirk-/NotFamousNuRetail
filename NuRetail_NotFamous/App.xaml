@@ -9,5 +9,5 @@
         <cont:QueryManager x:Key="QManager" ></cont:QueryManager>
         <conv:BoolToStatusbarTextConverter x:Key="StatusBarConv"></conv:BoolToStatusbarTextConverter>
         <conv:DoubleToMoneyStringConverter x:Key="MoneyConv"></conv:DoubleToMoneyStringConverter>
-    </Application.Resources>
+        </Application.Resources>
 </Application>

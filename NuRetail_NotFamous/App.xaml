@@ -7,7 +7,6 @@
              Exit="Application_Exit_1">
     <Application.Resources>
         <cont:QueryManager x:Key="QManager" ></cont:QueryManager>
-        <cont:ImageFetcher x:Key="CImageFetcher"></cont:ImageFetcher>
         <conv:BoolToStatusbarTextConverter x:Key="StatusBarConv"></conv:BoolToStatusbarTextConverter>
         <conv:DoubleToMoneyStringConverter x:Key="MoneyConv"></conv:DoubleToMoneyStringConverter>
     </Application.Resources>

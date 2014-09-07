@@ -27,6 +27,7 @@ namespace NuRetail_NotFamous
         public ImageFetcher CurrentImageFetcher { get; set; }
         public int SelectedPurchaseOrder { get; set; }
         public int SelectedCustomerOrder { get; set; }
+        public int SelectedProduct { get; set; }
 
         public MainWindow()
         {
@@ -34,7 +35,7 @@ namespace NuRetail_NotFamous
 
             InitializeComponent();
             CurrentQueryManager = (QueryManager)FindResource("QManager");
-            CurrentImageFetcher = (ImageFetcher)FindResource("CImageFetcher");
+            CurrentImageFetcher = new ImageFetcher();
             StatusTextBlock.DataContext = CurrentQueryManager;
         }
 
@@ -127,12 +128,26 @@ namespace NuRetail_NotFamous
                     case 4:
                         RefreshProducts();
                         break;
+                    case 5:
+                        RefreshProductDetail();
+                        break;
                 }
             }
             catch (Exception e)
             {
                 string msg = "An error has occurred.\n" + e.Message;
                 Dispatcher.BeginInvoke(new Action(() => MessageBox.Show(msg)));
+            }
+        }
+
+        private void RefreshProductDetail()
+        {
+            Product p = (Product)ProductsDataGrid.SelectedItem;
+
+            if (p != null)
+            {
+                ProductDetailTab.DataContext = p;
+                PrimaryImageBox.Source = 
             }
         }
 
@@ -182,6 +197,34 @@ namespace NuRetail_NotFamous
                     e.Column.Header = "Extended Cost";
                     break;
                 default:
+                    break;
+            }
+        }
+
+        private void ProductsDataGrid_AutoGeneratingColumn_1(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            switch (e.Column.Header.ToString())
+            {
+                case "ProductId":
+                    e.Cancel = true;
+                    break;
+                case "Sku":
+                    e.Column.Header = "SKU";
+                    break;
+                case "Upc":
+                    e.Column.Header = "UPC";
+                    break;
+                case "ProductName":
+                    e.Column.Header = "Product";
+                    break;
+                case "Description":
+                    e.Cancel = true;
+                    break;
+                case "PrimaryImage":
+                    e.Cancel = true;
+                    break;
+                case "SecondaryImages":
+                    e.Cancel = true;
                     break;
             }
         }

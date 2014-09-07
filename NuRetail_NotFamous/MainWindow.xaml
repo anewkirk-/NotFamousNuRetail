@@ -78,7 +78,31 @@
             </TabItem>
             
             <TabItem Header="Products">
-                <DataGrid x:Name="ProductsDataGrid"></DataGrid>
+                <DataGrid x:Name="ProductsDataGrid" AutoGeneratingColumn="ProductsDataGrid_AutoGeneratingColumn_1"></DataGrid>
+            </TabItem>
+            
+            <TabItem Header="Product Detail">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel>
+                                <Label>Name:</Label>
+                                <Label>MSRP:</Label>
+                                <Label>SKU:</Label>
+                                <Label>UPC:</Label>
+                            </StackPanel>
+                            <StackPanel>
+                                <Label x:Name="ProductNameLabel">t</Label>
+                                <Label x:Name="ProductMsrpLabel">h</Label>
+                                <Label x:Name="ProductSkuLabel">s</Label>
+                                <Label x:Name="ProductUpcLabel">s</Label>
+                            </StackPanel>
+                        </StackPanel>
+                        <Image x:Name="PrimaryImageBox" Width="100" Height="100"></Image>
+                    </StackPanel>
+                    <DataGrid x:Name="ProductDetailVendorsDatagrid"></DataGrid>
+                    <ComboBox x:Name="SecondaryImagesComboBox"></ComboBox>
+                </StackPanel>
             </TabItem>
             
             <TabItem Header="Customer Order Summary">

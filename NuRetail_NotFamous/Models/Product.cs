@@ -12,11 +12,14 @@ namespace NuRetail_NotFamous.Models
         public string Sku { get; set; }
         public long Upc { get; set; }
         public string ProductName { get; set; }
-        public double Msrp { get; set; }
+        public decimal Msrp { get; set; }
         public string Description { get; set; }
         public ProductImage PrimaryImage { get; set; }
         public List<ProductImage> SecondaryImages { get; set; }
-        public string PrimaryImageURL { get; set; }
-        public string SecondaryImageURL { get; set; }
+
+        public Product()
+        {
+            this.SecondaryImages = new List<ProductImage>();
+        }
     }
 }

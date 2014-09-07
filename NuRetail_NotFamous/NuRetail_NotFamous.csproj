@@ -76,8 +76,8 @@
     <Compile Include="Models\CustomerOrderDetail.cs" />
     <Compile Include="Models\CustomerOrderSummary.cs" />
     <Compile Include="Models\FullPurchaseInfo.cs" />
-    <Compile Include="Models\ProductImage.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductImage.cs" />
     <Compile Include="Models\PurchaseOrderDetail.cs" />
     <Compile Include="Models\PurchaseOrderSummary.cs" />
     <Compile Include="Models\Shipment.cs" />

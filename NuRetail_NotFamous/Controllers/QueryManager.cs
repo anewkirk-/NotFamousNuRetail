@@ -16,9 +16,6 @@ namespace NuRetail_NotFamous.Controllers
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-//        private string connectString = @"server=localhost; Port=3306; database=nuretail; user=notfamous;
-//            password=firemonkey";
-
         private string connectString = @"server=localhost; Port=3306; database=nuretail; user=notfamous;
             password=firemonkey";
 
@@ -37,14 +34,10 @@ where w.address_id = a.address_id;";
         private string vendorQuery = @"select vendor_id, vendor_name
 from vendors
 order by vendor_name;";
-        //added this
-        private string imageQuery = @"select image_url
-from product_images
-order by image_id";
-        //added this
-        private string productQuery = @"select product_id, product_name, msrp, sku, description, upc
+
+        private string productQuery = @"select product_id, name, msrp, sku, description, upc
 from products
-order by product_name ";
+order by name ";
 
         private string purchaseSummaryQuery = @"select p.purchase_id, 
 	p.purchase_date, 
@@ -70,6 +63,10 @@ where p.product_id = pp.product_id
 and pp.purchase_id = ";
 
         private string purchaseDetailQueryP2 = "\norder by p.sku desc;";
+
+        private string productImageQuery = @"select image_url, image_priority
+from product_images
+where product_id = ";
 
         public MySqlConnection connection;
 
@@ -126,7 +123,6 @@ and pp.purchase_id = ";
             }
         }
 
-        //added this, still trying to fix the link between product images and products
         public List<Product> QueryProducts()
         {
             List<Product> productResult = new List<Product>();
@@ -136,39 +132,63 @@ and pp.purchase_id = ";
 
             while (resultReader.Read())
             {
+
                 Product current = new Product();
-                current.ProductId = (int)resultReader["product_id"];
-                current.ProductName = (string)resultReader["product_name"];
-                current.Msrp = (double)resultReader["msrp"];
-                current.Description = (string)resultReader["description"];
+                var pid = resultReader["product_id"];
+                if (pid.GetType() != typeof(System.DBNull))
+                {
+                    current.ProductId = (int)pid;
+                }
+                var pname = resultReader["name"];
+                if(pname.GetType() != typeof(System.DBNull))
+                {
+                    current.ProductName = (string)pname;
+                }
+                current.Msrp = (decimal)resultReader["msrp"];
+                var pdesc = resultReader["description"];
+                if (pdesc.GetType() != typeof(System.DBNull))
+                {
+                    current.Description = (string)pdesc;
+                }
                 current.Sku = (string)resultReader["sku"]; 
                 current.Upc = (long)resultReader["upc"];
-                //check if its the right primaryimageurl  
-                current.PrimaryImageURL = (string)resultReader["image_url"];
-                //need to get seconday image
                 productResult.Add(current);
             }
             resultReader.Close();
-            return productResult;
+            return AttachImageUrlToProducts(productResult);
 
         }
 
-        //added this
-        public List<ProductImage> QueryProductImages()
+        private List<Product> AttachImageUrlToProducts(List<Product> p)
         {
-            List<ProductImage> imageResult = new List<ProductImage>();
-
-            MySqlCommand command = new MySqlCommand(imageQuery, connection);
-            MySqlDataReader resultReader = command.ExecuteReader();
-
-            while (resultReader.Read())
+            List<Product> result = new List<Product>(p);
+            string query;
+            MySqlCommand command;
+            ProductImage current;
+           // List<ProductImage> currentImages;
+            foreach (Product prod in result)
             {
-                ProductImage image = new ProductImage();
-                image.Url = (string)resultReader["image_url"];
-                imageResult.Add(image);
+                query = productImageQuery + prod.ProductId + ";";
+                command = new MySqlCommand(query, connection);
+                current = new ProductImage();
+                MySqlDataReader resultReader = command.ExecuteReader();
+               // currentImages = new List<ProductImage>();
+                while (resultReader.Read())
+                {
+                    current.ImagePriority = (int)resultReader["image_priority"];
+                    current.Url = (string)resultReader["image_url"];
+                    if (current.ImagePriority == 1)
+                    {
+                        prod.PrimaryImage = current;
+                    }
+                    else
+                    {
+                        prod.SecondaryImages.Add(current);
+                    }
+                }
+                resultReader.Close();
             }
-            resultReader.Close();
-            return imageResult;
+            return result;
         }
 
         public List<Vendor> QueryVendors()
@@ -275,10 +295,5 @@ and pp.purchase_id = ";
             }
         }
 
-
-        internal List<Product> QueryProducts()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

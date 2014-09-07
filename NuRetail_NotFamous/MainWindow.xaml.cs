@@ -44,12 +44,6 @@ namespace NuRetail_NotFamous
             ProductsDataGrid.ItemsSource = p;
         }
 
-        private void RefreshProductImages()
-        {
-            List<ProductImage> i = CurrentQueryManager.QueryProductImages();
-            //ProductsDataGrid.ItemSource = i;
-        }
-
         private void RefreshOrderSummaries()
         {
             List<CustomerOrderSummary> cos = CurrentQueryManager.QueryCustomerOrderSummaries();
@@ -129,6 +123,9 @@ namespace NuRetail_NotFamous
                         break;
                     case 3:
                         RefreshPurchaseDetail();
+                        break;
+                    case 4:
+                        RefreshProducts();
                         break;
                 }
             }

@@ -8,6 +8,7 @@ namespace NuRetail_NotFamous.Models
 {
     public class ProductImage
     {
+        public int ImagePriority { get; set; }
         public string Url { get; set; }
     }
 }

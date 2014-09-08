@@ -68,9 +68,17 @@ and pp.purchase_id = ";
 from product_images
 where product_id = ";
 
+        private string productVendorQueryP1 = @"select v.vendor_name, pv.product_price
+from product_vendors pv, vendors v
+where v.vendor_id = pv.vendor_id
+and pv.product_id = ";
+
+        private string productVendorQueryP2 = " group by v.vendor_id order by pv.product_price asc;";
+
         public MySqlConnection connection;
 
         private bool _isConnectionOpen;
+
         public bool IsConnectionOpen
         {
             get
@@ -295,5 +303,22 @@ where product_id = ";
             }
         }
 
+
+        public List<Vendor> QueryProductVendors(long p)
+        {
+            List<Vendor> result = new List<Vendor>();
+            string query = productVendorQueryP1 + p + productVendorQueryP2;
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader resultReader = command.ExecuteReader();
+
+            while (resultReader.Read())
+            {
+                Vendor current = new Vendor();
+                current.Name = (String)resultReader["vendor_name"];
+                result.Add(current);
+            }
+            resultReader.Close();
+            return result;
+        }
     }
 }

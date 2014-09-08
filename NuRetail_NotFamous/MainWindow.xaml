@@ -93,15 +93,22 @@
                             </StackPanel>
                             <StackPanel>
                                 <Label x:Name="ProductNameLabel" Content="{Binding ProductName}"></Label>
-                                <Label x:Name="ProductMsrpLabel"></Label>
-                                <Label x:Name="ProductSkuLabel"></Label>
-                                <Label x:Name="ProductUpcLabel"></Label>
+                                <Label x:Name="ProductMsrpLabel" Content="{Binding Msrp, Converter={StaticResource MoneyConv}}"></Label>
+                                <Label x:Name="ProductSkuLabel" Content="{Binding Sku}"></Label>
+                                <Label x:Name="ProductUpcLabel" Content="{Binding Upc}"></Label>
                             </StackPanel>
                         </StackPanel>
                         <Image x:Name="PrimaryImageBox" Width="100" Height="100"></Image>
                     </StackPanel>
-                    <DataGrid x:Name="ProductDetailVendorsDatagrid"></DataGrid>
-                    <ComboBox x:Name="SecondaryImagesComboBox"></ComboBox>
+                    <DataGrid x:Name="ProductDetailVendorsDatagrid" AutoGeneratingColumn="ProductDetailVendorsDatagrid_AutoGeneratingColumn_1"></DataGrid>
+                    <ListView x:Name="SecondaryImagesItemsPanel">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        ...
+                    </ListView>
                 </StackPanel>
             </TabItem>
             

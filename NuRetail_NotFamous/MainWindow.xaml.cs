@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using NuRetail_NotFamous.Controllers;
 using NuRetail_NotFamous.Models;
 using System.IO;
+using NuRetail_NotFamous.Converters;
 
 namespace NuRetail_NotFamous
 {
@@ -130,9 +131,6 @@ namespace NuRetail_NotFamous
                     case 4:
                         RefreshProducts();
                         break;
-                    case 5:
-                        RefreshProductDetail();
-                        break;
                 }
             }
             catch (Exception e)
@@ -145,7 +143,7 @@ namespace NuRetail_NotFamous
         private void RefreshProductDetail()
         {
             Product p = (Product)ProductsDataGrid.SelectedItem;
-            Dispatcher.Invoke((Action)(() =>
+            Dispatcher.BeginInvoke((Action)(() =>
                 {
                     ;
                     if (p != null)
@@ -164,6 +162,12 @@ namespace NuRetail_NotFamous
                         bi.EndInit();
 
                         PrimaryImageBox.Source = bi;
+                        //SecondaryImagesItemsPanel.ItemsSource = null;
+                        //UrlToImageConverter utic = (UrlToImageConverter)FindResource("UrlImgConv");
+                        //List<System.Drawing.Image> imgs = (List<System.Drawing.Image>)utic.Convert(p.SecondaryImages, typeof(System.Drawing.Image), null, null);
+                        //SecondaryImagesItemsPanel.ItemsSource = imgs;
+
+                        ProductDetailVendorsDatagrid.ItemsSource = CurrentQueryManager.QueryProductVendors(p.ProductId);
                     }
                 }));
         }
@@ -262,8 +266,21 @@ namespace NuRetail_NotFamous
             if (selected != null)
             {
                 SelectedProduct = (int)selected.ProductId;
-                RefreshProductDetail();
                 WindowTabControl.SelectedIndex = 5;
+                RefreshProductDetail();
+            }
+        }
+
+        private void ProductDetailVendorsDatagrid_AutoGeneratingColumn_1(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            switch (e.Column.Header.ToString())
+            {
+                case "Id":
+                    e.Cancel = true;
+                    break;
+                case "Name":
+                    e.Column.Header = "Vendors";
+                    break;
             }
         }
     }

@@ -11,8 +11,16 @@ namespace NuRetail_NotFamous.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            double b = (double)value;
-            return "$" + String.Format("{0:0.00}", value);
+            try
+            {
+                double b = (double)value;
+                return "$" + String.Format("{0:0.00}", value);
+            }
+            catch
+            {
+                decimal b = (decimal)value;
+                return "$" + String.Format("{0:0.00}", value);
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
